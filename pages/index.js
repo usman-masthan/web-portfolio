@@ -6,7 +6,7 @@ export default function Home({ profile }) {
 
 export async function getServerSideProps() {
   try {
-    const res = await fetch('http://localhost:3000/api/profile');
+    const res = await fetch('/api/profile');
     if (!res.ok) {
       console.error('API error:', res.status, res.statusText);
       return { props: { profile: null } };

@@ -12,7 +12,12 @@ const profileSchema = new mongoose.Schema({
 const Profile = mongoose.models.Profile || mongoose.model('Profile', profileSchema);
 
 const connectDB = async () => {
+  if (!process.env.MONGODB_URI) {
+    throw new Error('Please define MONGODB_URI environment variable');
+  }
+
   if (mongoose.connections[0].readyState) return;
+
   try {
     await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
@@ -24,7 +29,6 @@ const connectDB = async () => {
     throw error;
   }
 };
-
 export default async function handler(req, res) {
   try {
     await connectDB();
