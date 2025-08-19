@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+import ContactModal from './ContactModal';
 
 export default function HomeSection({ profile }) {
     const [darkMode, setDarkMode] = useState(false);
+    const [modal, setModal] = useState(false);
 
     useEffect(() => {
         if (darkMode) {
@@ -10,7 +12,6 @@ export default function HomeSection({ profile }) {
             document.body.classList.remove('active');
         }
     }, [darkMode]);
-
 
     if (!profile || !profile.name) {
         return <div>Loading profile...</div>;
@@ -50,11 +51,17 @@ export default function HomeSection({ profile }) {
                     <h1>{profile.name}</h1>
                     <h2>{profile.title}</h2>
                     <p>{profile.description}</p>
-                    <a href={profile.cvUrl} target="_blank" download className="btn">
-                        My Resume <i className="bx bx-file-blank"></i>
-                    </a>
+                    <div className="button-container">
+                        <a href={profile.cvUrl} target="_blank" download className="btn">
+                            My Resume <i className="bx bx-file-blank"></i>
+                        </a>
+                        <button onClick={() => setModal(true)} className="btn">
+                            Contact Me <i className="bx bx-message-dots"></i>
+                        </button>
+                    </div>
                 </div>
             </section>
+            {modal && <ContactModal setModal={setModal} profile={profile} />}
         </>
     );
 }

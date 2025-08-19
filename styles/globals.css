@@ -228,6 +228,9 @@ header.shadow {
   letter-spacing: 1.5px;
   box-shadow: 0 6px 20px rgba(163, 191, 250, 0.4);
   transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+  border: none; /* Add this line to remove the border */
+  cursor: pointer; /* Add for consistent pointer on hover */
+  font-family: "Poppins", sans-serif; /* Add to ensure font matches */
 }
 .btn:hover {
   background: linear-gradient(45deg, var(--hover-color), #6f8cff);
@@ -249,6 +252,104 @@ header.shadow {
 .heading span {
   font-size: var(--p-font);
   color: var(--secondary-color);
+}
+/* Add to your existing globals.css */
+
+.button-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+
+.modal {
+  background: var(--bg-color);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  z-index: 1002;
+}
+
+.modal h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+}
+
+.contact-options {
+  border: none;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.contact-btn {
+  border: none !important;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 2rem;
+  background: var(--secondary-color);
+  color: #fff;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.contact-btn:hover {
+  background: var(--hover-color);
+  border: none;
+  outline: none;
+}
+
+.modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal input,
+.modal textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  background: transparent;
+  color: var(--text-color);
+  font-family: inherit;
+}
+
+.modal textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-color);
+  cursor: pointer;
 }
 /* Responsive Design */
 @media (max-width: 991px) {
@@ -330,6 +431,7 @@ header.shadow {
   }
   .btn {
     padding: 0.8rem 1.5rem;
+    border: none;
   }
   .social {
     gap: 1.5rem;

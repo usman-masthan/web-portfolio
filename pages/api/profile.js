@@ -7,6 +7,8 @@ const profileSchema = new mongoose.Schema({
   socialLinks: [{ url: String, icon: String }],
   profileImage: String,
   cvUrl: String,
+  phone: String, // Add this line
+  email: String, // Add this line
 });
 
 const Profile = mongoose.models.Profile || mongoose.model('Profile', profileSchema);
