@@ -351,6 +351,47 @@ header.shadow {
   color: var(--text-color);
   cursor: pointer;
 }
+.scroll-to-top,
+.scroll-to-bottom {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: linear-gradient(45deg, var(--secondary-color), #87a6ff);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  color: #fff;
+  font-size: 1.8rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-to-top.show,
+.scroll-to-bottom.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.scroll-to-top:hover,
+.scroll-to-bottom:hover {
+  background: linear-gradient(45deg, var(--hover-color), #6f8cff);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.scroll-to-top:active,
+.scroll-to-bottom:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
 /* Responsive Design */
 @media (max-width: 991px) {
   header {

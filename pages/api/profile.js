@@ -7,8 +7,29 @@ const profileSchema = new mongoose.Schema({
   socialLinks: [{ url: String, icon: String }],
   profileImage: String,
   cvUrl: String,
-  phone: String, // Add this line
-  email: String, // Add this line
+  phone: String,
+  email: String,
+  // Add new fields for projects, achievements, and blogs
+  projects: [{
+    title: String,
+    description: String,
+    image: String,
+    url: String,
+    technologies: [String]
+  }],
+  achievements: [{
+    title: String,
+    description: String,
+    image: String,
+    date: Date
+  }],
+  blogs: [{
+    title: String,
+    description: String,
+    image: String,
+    url: String,
+    date: Date
+  }]
 });
 
 const Profile = mongoose.models.Profile || mongoose.model('Profile', profileSchema);
@@ -21,7 +42,6 @@ const connectDB = async () => {
   if (mongoose.connections[0].readyState) return;
 
   try {
-    // These options are no longer needed in recent versions of the driver
     await mongoose.connect(process.env.MONGODB_URI);
     console.log('MongoDB connected');
   } catch (error) {
@@ -29,6 +49,7 @@ const connectDB = async () => {
     throw error;
   }
 };
+
 export default async function handler(req, res) {
   try {
     await connectDB();
@@ -45,6 +66,7 @@ export default async function handler(req, res) {
       if (existingProfile) {
         const updatedProfile = await Profile.findOneAndUpdate({}, req.body, {
           new: true,
+          runValidators: true
         });
         res.status(200).json(updatedProfile);
       } else {
