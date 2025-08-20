@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import ContactModal from './ContactModal';
 import ScrollToTop from './ScrollToTop';
 import ScrollToBottom from './ScrollToBottom';
+import Link from 'next/link';
 
 export default function HomeSection({ profile }) {
     const [darkMode, setDarkMode] = useState(false);
@@ -18,6 +19,12 @@ export default function HomeSection({ profile }) {
     if (!profile || !profile.name) {
         return <div>Loading profile...</div>;
     }
+
+    // Group achievements by category
+    const groupedAchievements = Object.groupBy(profile.achievements || [], ({ category }) => category);
+
+    // Group projects by domain
+    const groupedProjects = Object.groupBy(profile.projects || [], ({ domain }) => domain);
 
     return (
         <>
@@ -45,9 +52,6 @@ export default function HomeSection({ profile }) {
                     <a href="#achievements">
                         <i className="bx bx-medal"></i>
                     </a>
-                    <a href="#blogs">
-                        <i className="bx bx-notepad"></i>
-                    </a>
                     <a href="#projects">
                         <i className="bx bx-folder-plus"></i>
                     </a>
@@ -74,63 +78,88 @@ export default function HomeSection({ profile }) {
             </section>
             <section className="achievements" id="achievements">
                 <div className="heading">
-                    <h2>Achievements</h2>
+                    <h2>Achievements and Certifications</h2>
                 </div>
-                <div className="achievements-grid">
-                    {profile.achievements && profile.achievements.length > 0 ? (
-                        profile.achievements.map((img, index) => (
-                            <img key={index} src={img} alt={`Achievement ${index + 1}`} className="achievement-img" />
-                        ))
-                    ) : (
-                        <p>No achievements available</p>
-                    )}
-                </div>
-            </section>
-            <section className="blogs" id="blogs">
-                <div className="heading">
-                    <h2>Blogs</h2>
-                </div>
-                <div className="blogs-grid">
-                    {profile.blogs && profile.blogs.length > 0 ? (
-                        profile.blogs.map((blog, index) => (
-                            <div key={index} className="blog-card">
-                                <img src={blog.image} alt={blog.title} className="blog-img" />
-                                <h3>{blog.title}</h3>
-                                <p>{blog.description}</p>
-                                {blog.url && (
-                                    <a href={blog.url} target="_blank" className="btn">
-                                        Read More
-                                    </a>
-                                )}
+                {Object.keys(groupedAchievements).length > 0 ? (
+                    Object.entries(groupedAchievements).map(([category, items]) => (
+                        <div key={category} className="achievement-group">
+                            <h3 className="subheading">{category}</h3>
+                            <div className="achievements-grid">
+                                {items.map((achievement, index) => (
+                                    <div key={index} className="achievement-card">
+                                        <div className="card-inner">
+                                            <div className="card-front">
+                                                {achievement.image ? (
+                                                    <img src={achievement.image} alt={achievement.title} className="card-img" />
+                                                ) : (
+                                                    <div className="text-logo">{achievement.issuer || category}</div>
+                                                )}
+                                            </div>
+                                            <div className="card-back">
+                                                <h4>{achievement.title}</h4>
+                                                <p>Issuer: {achievement.issuer || 'N/A'}</p>
+                                                <p>Date: {achievement.date ? new Date(achievement.date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) : 'N/A'}</p>
+                                                <p>{achievement.description}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
-                        ))
-                    ) : (
-                        <p>No blogs available</p>
-                    )}
-                </div>
+                        </div>
+                    ))
+                ) : (
+                    <p>No achievements available</p>
+                )}
             </section>
             <section className="projects" id="projects">
                 <div className="heading">
-                    <h2>Projects</h2>
+                    <h2>Featured Projects</h2>
                 </div>
-                <div className="projects-grid">
-                    {profile.projects && profile.projects.length > 0 ? (
-                        profile.projects.map((project, index) => (
-                            <div key={index} className="project-card">
-                                <img src={project.image} alt={project.title} className="project-img" />
-                                <h3>{project.title}</h3>
-                                <p>{project.description}</p>
-                                {project.url && (
-                                    <a href={project.url} target="_blank" className="btn">
-                                        View Project
-                                    </a>
-                                )}
+                {Object.keys(groupedProjects).length > 0 ? (
+                    Object.entries(groupedProjects).map(([domain, projects]) => (
+                        <div key={domain} className="project-group">
+                            <h3 className="subheading">{domain}</h3>
+                            <div className="projects-grid">
+                                {projects.map((project, index) => (
+                                    <Link key={index} href={`/projects/${project._id}`} legacyBehavior>
+                                        <div className="project-card">
+                                            <div className="card-inner">
+                                                <div className="card-front">
+                                                    {project.image ? (
+                                                        <img src={project.image} alt={project.title} className="card-img" />
+                                                    ) : (
+                                                        <div className="text-logo">
+                                                            <h3>{project.title}</h3>
+                                                            <p>View Project</p>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                <div className="card-back">
+                                                    <h4>{project.title}</h4>
+                                                    <div className="project-links">
+                                                        {project.githubUrl && (
+                                                            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                                                                <i className="bx bxl-github"></i>
+                                                            </a>
+                                                        )}
+                                                        {project.linkedinUrl && (
+                                                            <a href={project.linkedinUrl} target="_blank" rel="noopener noreferrer">
+                                                                <i className="bx bxl-linkedin"></i>
+                                                            </a>
+                                                        )}
+                                                    </div>
+                                                    <button className="btn">View Project</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                ))}
                             </div>
-                        ))
-                    ) : (
-                        <p>No projects available</p>
-                    )}
-                </div>
+                        </div>
+                    ))
+                ) : (
+                    <p>No projects available</p>
+                )}
             </section>
             <ScrollToTop />
             <ScrollToBottom />

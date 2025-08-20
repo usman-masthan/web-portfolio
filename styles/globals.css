@@ -1,6 +1,7 @@
 /* Google Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap"); /* Elegant serif for headings */
+
 * {
   margin: 0;
   padding: 0;
@@ -11,6 +12,7 @@
   scroll-padding-top: 2rem;
   font-family: "Poppins", sans-serif;
 }
+
 :root {
   --primary-color: #2e2e3a; /* Deep charcoal for sophistication */
   --secondary-color: #a3bffa; /* Soft sky blue accent */
@@ -22,24 +24,29 @@
   --medium-font: 1.8rem;
   --p-font: 0.941rem;
 }
+
 section {
   padding: 50px 10%;
 }
+
 body.active {
   --bg-color: #1c252d; /* Dark gradient base */
   --text-color: #e0e6f0; /* Light gray for contrast */
   --primary-color: #e0e6f0; /* Invert primary */
   --secondary-color: #a3bffa; /* Keep blue accent */
 }
+
 body {
   background: linear-gradient(135deg, var(--bg-color), #ffffff); /* Elegant gradient */
   color: var(--text-color);
   line-height: 1.6;
 }
+
 *::selection {
   color: #fff;
   background: var(--secondary-color);
 }
+
 header {
   position: fixed;
   width: 100%;
@@ -53,12 +60,15 @@ header {
   backdrop-filter: blur(8px); /* Enhanced glassmorphism */
   transition: background 0.3s, box-shadow 0.2s;
 }
+
 header.active {
   background: rgba(28, 37, 45, 0.95); /* Darker in dark mode */
 }
+
 header.shadow {
   box-shadow: 0 0 4px rgb(14 55 54 / 15%);
 }
+
 #darkmode {
   position: absolute;
   right: 2rem;
@@ -68,11 +78,13 @@ header.shadow {
   height: 30px;
   cursor: pointer;
 }
+
 #darkmode input {
   opacity: 0;
   width: 0;
   height: 0;
 }
+
 #darkmode .slider {
   position: absolute;
   top: 0;
@@ -88,6 +100,7 @@ header.shadow {
   justify-content: space-between;
   padding: 0 6px;
 }
+
 #darkmode .slider:before {
   content: "🌞";
   position: absolute;
@@ -103,17 +116,21 @@ header.shadow {
   justify-content: center;
   font-size: 12px;
 }
+
 #darkmode input:checked + .slider {
   background-color: var(--primary-color); /* Charcoal when on */
 }
+
 #darkmode input:checked + .slider:before {
   transform: translateX(30px);
   content: "🌙";
   background-color: var(--hover-color);
 }
+
 #darkmode .slider:hover {
   background-color: #d1d6e0; /* Lighter gray on hover */
 }
+
 .home {
   position: relative;
   width: 100%;
@@ -124,6 +141,7 @@ header.shadow {
   gap: 1rem;
   padding: 50px 10%;
 }
+
 .home::before {
   content: "";
   position: absolute;
@@ -136,6 +154,7 @@ header.shadow {
   filter: blur(10px); /* Stronger blur for effect */
   opacity: 0.6;
 }
+
 .home-img {
   order: 3;
   display: flex;
@@ -143,6 +162,7 @@ header.shadow {
   position: relative;
   z-index: 1;
 }
+
 .home-img img {
   width: 500px;
   height: 500px;
@@ -152,15 +172,18 @@ header.shadow {
   box-shadow: 0 10px 30px rgba(163, 191, 250, 0.4); /* Pronounced shadow */
   transition: transform 0.3s, box-shadow 0.3s;
 }
+
 .home-img img:hover {
   transform: scale(1.05); /* Noticeable zoom */
   box-shadow: 0 15px 40px rgba(163, 191, 250, 0.6); /* Enhanced hover shadow */
 }
+
 .home-text {
   padding-left: 1.4rem;
   position: relative;
   z-index: 1;
 }
+
 .home-text span {
   font-size: var(--medium-font);
   font-weight: 500;
@@ -168,6 +191,7 @@ header.shadow {
   letter-spacing: 2px;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
+
 .home-text h1 {
   font-family: "Lora", serif; /* Elegant serif */
   font-size: var(--big-font);
@@ -175,12 +199,14 @@ header.shadow {
   margin: 0.5rem 0;
   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2); /* Standout shadow */
 }
+
 .home-text h2 {
   font-size: 1.3rem;
   font-weight: 600;
   color: var(--primary-color);
   margin-bottom: 1rem;
 }
+
 .home-text p {
   font-size: var(--p-font);
   font-weight: 400;
@@ -189,6 +215,7 @@ header.shadow {
   max-width: 600px;
   line-height: 1.8;
 }
+
 .social {
   display: flex;
   flex-direction: column;
@@ -196,6 +223,7 @@ header.shadow {
   z-index: 1;
   padding: 1rem 0;
 }
+
 .social a {
   margin-bottom: 1rem;
   font-size: 22px;
@@ -203,6 +231,7 @@ header.shadow {
   transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
   position: relative;
 }
+
 .social a::after {
   content: "";
   position: absolute;
@@ -213,9 +242,11 @@ header.shadow {
   background: var(--secondary-color);
   transition: width 0.3s;
 }
+
 .social a:hover::after {
   width: 27%;
 }
+
 .btn {
   display: inline-block;
   background: linear-gradient(45deg, var(--secondary-color), #87a6ff); /* Gradient for standout */
@@ -228,32 +259,35 @@ header.shadow {
   letter-spacing: 1.5px;
   box-shadow: 0 6px 20px rgba(163, 191, 250, 0.4);
   transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
-  border: none; /* Add this line to remove the border */
-  cursor: pointer; /* Add for consistent pointer on hover */
-  font-family: "Poppins", sans-serif; /* Add to ensure font matches */
+  border: none;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
 }
+
 .btn:hover {
   background: linear-gradient(45deg, var(--hover-color), #6f8cff);
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(163, 191, 250, 0.6);
 }
+
 .heading {
-  text-align: center;
+  text-align: left;
   margin-bottom: 3rem;
   position: relative;
   z-index: 1;
 }
+
 .heading h2 {
-  font-size: var(--medium-font);
+  font-size: 2.5rem;
   font-weight: 600;
   color: var(--text-color);
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
+
 .heading span {
   font-size: var(--p-font);
   color: var(--secondary-color);
 }
-/* Add to your existing globals.css */
 
 .button-container {
   display: flex;
@@ -351,6 +385,7 @@ header.shadow {
   color: var(--text-color);
   cursor: pointer;
 }
+
 .scroll-to-top,
 .scroll-to-bottom {
   position: fixed;
@@ -392,7 +427,203 @@ header.shadow {
   transform: translateY(0);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
+
+/* Achievements */
+.achievements, .projects {
+  text-transform: uppercase;
+  padding: 50px 10%;
+}
+
+.achievement-group, .project-group {
+  margin-bottom: 2rem;
+}
+
+.subheading {
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: "Lora", serif;
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.achievements-grid, .projects-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.achievement-card {
+  perspective: 1000px; /* Enable 3D perspective */
+}
+
+.project-card {
+  perspective: 1000px; /* Enable 3D perspective */
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.achievement-card:hover .card-inner, .project-card:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+}
+
+.card-front {
+  z-index: 2;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  padding: 1rem;
+  text-align: center;
+}
+
+.card-img {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.text-logo {
+  text-align: center;
+  font-family: "Lora", serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.text-logo h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.text-logo p {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--secondary-color);
+}
+
+.card-back h4 {
+  font-family: "Lora", serif;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.card-back p {
+  font-size: 0.8rem;
+  margin: 0.3rem 0;
+  color: var(--text-color);
+}
+
+.project-links {
+  display: flex;
+  gap: 1rem;
+  margin: 0.5rem 0;
+}
+
+.project-links a {
+  font-size: 1.5rem;
+  color: var(--text-color);
+  transition: color 0.3s;
+}
+
+.project-links a:hover {
+  color: var(--secondary-color);
+}
+
+.card-back .btn {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(45deg, var(--secondary-color), #87a6ff);
+  color: #fff;
+  border-radius: 2rem;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+}
+
+.card-back .btn:hover {
+  background: linear-gradient(45deg, var(--hover-color), #6f8cff);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Project Detail Page */
+.project-detail {
+  padding: 50px 10%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.video-embed {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.image-gallery .gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.gallery-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.docs-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.docs-section li {
+  margin-bottom: 0.5rem;
+}
+
+.key-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
 /* Responsive Design */
+@media (max-width: 1199px) {
+  .achievements-grid, .projects-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (max-width: 991px) {
   header {
     padding: 18px 4%;
@@ -403,7 +634,11 @@ header.shadow {
   .home {
     padding: 50px 4%;
   }
+  .achievements, .projects {
+    padding: 50px 4%;
+  }
 }
+
 @media (max-width: 881px) {
   :root {
     --big-font: 2.7rem;
@@ -414,7 +649,11 @@ header.shadow {
     height: 200px;
   }
 }
-@media (max-width: 768px) {
+
+@media (max-width: 767px) {
+  .achievements-grid, .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
   :root {
     --big-font: 2.4rem;
     --medium-font: 1.2rem;
@@ -454,6 +693,7 @@ header.shadow {
     order: 1;
   }
 }
+
 @media (max-width: 340px) {
   :root {
     --big-font: 1.7rem;
