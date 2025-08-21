@@ -3,10 +3,13 @@ import ContactModal from './ContactModal';
 import ScrollToTop from './ScrollToTop';
 import ScrollToBottom from './ScrollToBottom';
 import Link from 'next/link';
+import Image from 'next/image';
+import Head from 'next/head';
 
 export default function HomeSection({ profile }) {
     const [darkMode, setDarkMode] = useState(false);
     const [modal, setModal] = useState(false);
+    const [selectedProject, setSelectedProject] = useState(null);
 
     useEffect(() => {
         if (darkMode) {
@@ -21,13 +24,37 @@ export default function HomeSection({ profile }) {
     }
 
     // Group achievements by category
-    const groupedAchievements = Object.groupBy(profile.achievements || [], ({ category }) => category);
+    const groupedAchievements = Object.groupBy(profile.achievements || [], ({ category }) => category.toLowerCase());
 
     // Group projects by domain
-    const groupedProjects = Object.groupBy(profile.projects || [], ({ domain }) => domain);
+    const groupedProjects = Object.groupBy(profile.projects || [], ({ domain }) => domain.toLowerCase());
+
+    // Parse YouTube URL safely
+    const getYouTubeEmbedUrl = (url) => {
+        if (!url) return null;
+        try {
+            const videoId = url.split('v=')[1]?.split('&')[0];
+            return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+        } catch (error) {
+            console.error('Invalid YouTube URL:', error);
+            return null;
+        }
+    };
+
+    const handleViewProject = (project) => {
+        setSelectedProject(project);
+    };
+
+    const handleCloseProjectModal = () => {
+        setSelectedProject(null);
+    };
 
     return (
         <>
+            <Head>
+                <title>{profile.name}'s Portfolio</title>
+                <meta name="description" content={profile.description} />
+            </Head>
             <header>
                 <label id="darkmode">
                     <input
@@ -120,39 +147,39 @@ export default function HomeSection({ profile }) {
                         <div key={domain} className="project-group">
                             <h3 className="subheading">{domain}</h3>
                             <div className="projects-grid">
-                                {projects.map((project, index) => (
-                                    <Link key={index} href={`/projects/${project._id}`} legacyBehavior>
-                                        <div className="project-card">
-                                            <div className="card-inner">
-                                                <div className="card-front">
-                                                    {project.image ? (
-                                                        <img src={project.image} alt={project.title} className="card-img" />
-                                                    ) : (
-                                                        <div className="text-logo">
-                                                            <h3>{project.title}</h3>
-                                                            <p>View Project</p>
-                                                        </div>
+                                {projects.map((project) => (
+                                    <div key={project._id} className="project-card">
+                                        <div className="card-inner">
+                                            <div className="card-front">
+                                                {project.image ? (
+                                                    <img src={project.image} alt={project.title} className="card-img" />
+                                                ) : (
+                                                    <div className="text-logo">
+                                                        <h3>{project.title}</h3>
+                                                        <p>View Project</p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="card-back">
+                                                <h4>{project.title}</h4>
+                                                <div className="project-links">
+                                                    {project.githubUrl && (
+                                                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                                                            <i className="bx bxl-github"></i>
+                                                        </a>
+                                                    )}
+                                                    {project.linkedinUrl && (
+                                                        <a href={project.linkedinUrl} target="_blank" rel="noopener noreferrer">
+                                                            <i className="bx bxl-linkedin"></i>
+                                                        </a>
                                                     )}
                                                 </div>
-                                                <div className="card-back">
-                                                    <h4>{project.title}</h4>
-                                                    <div className="project-links">
-                                                        {project.githubUrl && (
-                                                            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                                                                <i className="bx bxl-github"></i>
-                                                            </a>
-                                                        )}
-                                                        {project.linkedinUrl && (
-                                                            <a href={project.linkedinUrl} target="_blank" rel="noopener noreferrer">
-                                                                <i className="bx bxl-linkedin"></i>
-                                                            </a>
-                                                        )}
-                                                    </div>
-                                                    <button className="btn">View Project</button>
-                                                </div>
+                                                <button className="btn" onClick={() => handleViewProject(project)}>
+                                                    View Project
+                                                </button>
                                             </div>
                                         </div>
-                                    </Link>
+                                    </div>
                                 ))}
                             </div>
                         </div>
@@ -164,6 +191,107 @@ export default function HomeSection({ profile }) {
             <ScrollToTop />
             <ScrollToBottom />
             {modal && <ContactModal setModal={setModal} profile={profile} />}
+            {selectedProject && (
+                <div className="modal-backdrop">
+                    <div className="project-modal">
+                        <Head>
+                            <title>{`${selectedProject.title} | ${selectedProject.domain} Project`}</title>
+                            <meta name="description" content={selectedProject.description} />
+                            <meta property="og:title" content={selectedProject.title} />
+                            <meta property="og:description" content={selectedProject.description} />
+                            {selectedProject.image && <meta property="og:image" content={selectedProject.image} />}
+                        </Head>
+                        <button className="close-btn" onClick={handleCloseProjectModal}>×</button>
+                        <div className="project-detail">
+                            <div className="project-header">
+                                <h1>{selectedProject.title}</h1>
+                                <span className="project-domain">{selectedProject.domain}</span>
+                            </div>
+                            {selectedProject.image && (
+                                <div className="project-hero">
+                                    <Image
+                                        src={selectedProject.image}
+                                        alt={selectedProject.title}
+                                        width={1200}
+                                        height={630}
+                                        priority
+                                        className="hero-image"
+                                    />
+                                </div>
+                            )}
+                            <div className="project-content">
+                                <div className="project-description">
+                                    <p>{selectedProject.detailedDescription}</p>
+                                </div>
+                                <div className="project-technologies">
+                                    <h3>Technologies Used</h3>
+                                    <div className="tech-tags">
+                                        {selectedProject.technologies?.map((tech, index) => (
+                                            <span key={index} className="tech-tag">{tech}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                                {getYouTubeEmbedUrl(selectedProject.videoUrl) && (
+                                    <div className="video-container">
+                                        <h3>Project Demo</h3>
+                                        <iframe
+                                            src={getYouTubeEmbedUrl(selectedProject.videoUrl)}
+                                            title={`${selectedProject.title} demo video`}
+                                            width="100%"
+                                            height="480"
+                                            frameBorder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen
+                                        />
+                                    </div>
+                                )}
+                                {selectedProject.galleryImages?.length > 0 && (
+                                    <div className="image-gallery">
+                                        <h3>Project Gallery</h3>
+                                        <div className="gallery-grid">
+                                            {selectedProject.galleryImages.map((img, index) => (
+                                                <Image
+                                                    key={index}
+                                                    src={img}
+                                                    alt={`${selectedProject.title} - Gallery image ${index + 1}`}
+                                                    width={400}
+                                                    height={300}
+                                                    loading="lazy"
+                                                    className="gallery-img"
+                                                />
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                                <div className="project-links">
+                                    {selectedProject.githubUrl && (
+                                        <a
+                                            href={selectedProject.githubUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="btn github-btn"
+                                        >
+                                            <i className="bx bxl-github"></i>
+                                            Source Code
+                                        </a>
+                                    )}
+                                    {selectedProject.linkedinUrl && (
+                                        <a
+                                            href={selectedProject.linkedinUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="btn linkedin-btn"
+                                        >
+                                            <i className="bx bxl-linkedin"></i>
+                                            View on LinkedIn
+                                        </a>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 }
