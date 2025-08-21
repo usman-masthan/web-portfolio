@@ -76,11 +76,11 @@ export default function HomeSection({ profile }) {
                     ) : (
                         <p>No social links available</p>
                     )}
-                    <a href="#achievements">
-                        <i className="bx bx-medal"></i>
-                    </a>
                     <a href="#projects">
                         <i className="bx bx-folder-plus"></i>
+                    </a>
+                    <a href="#achievements">
+                        <i className="bx bx-medal"></i>
                     </a>
                 </div>
                 <div className="home-img">
@@ -102,41 +102,6 @@ export default function HomeSection({ profile }) {
                         </button>
                     </div>
                 </div>
-            </section>
-            <section className="achievements" id="achievements">
-                <div className="heading">
-                    <h2>Achievements and Certifications</h2>
-                </div>
-                {Object.keys(groupedAchievements).length > 0 ? (
-                    Object.entries(groupedAchievements).map(([category, items]) => (
-                        <div key={category} className="achievement-group">
-                            <h3 className="subheading">{category}</h3>
-                            <div className="achievements-grid">
-                                {items.map((achievement, index) => (
-                                    <div key={index} className="achievement-card">
-                                        <div className="card-inner">
-                                            <div className="card-front">
-                                                {achievement.image ? (
-                                                    <img src={achievement.image} alt={achievement.title} className="card-img" />
-                                                ) : (
-                                                    <div className="text-logo">{achievement.issuer || category}</div>
-                                                )}
-                                            </div>
-                                            <div className="card-back">
-                                                <h4>{achievement.title}</h4>
-                                                <p>Issuer: {achievement.issuer || 'N/A'}</p>
-                                                <p>Date: {achievement.date ? new Date(achievement.date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) : 'N/A'}</p>
-                                                <p>{achievement.description}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <p>No achievements available</p>
-                )}
             </section>
             <section className="projects" id="projects">
                 <div className="heading">
@@ -186,6 +151,41 @@ export default function HomeSection({ profile }) {
                     ))
                 ) : (
                     <p>No projects available</p>
+                )}
+            </section>
+            <section className="achievements" id="achievements">
+                <div className="heading">
+                    <h2>Achievements and Certifications</h2>
+                </div>
+                {Object.keys(groupedAchievements).length > 0 ? (
+                    Object.entries(groupedAchievements).map(([category, items]) => (
+                        <div key={category} className="achievement-group">
+                            <h3 className="subheading">{category}</h3>
+                            <div className="achievements-grid">
+                                {items.map((achievement, index) => (
+                                    <div key={index} className="achievement-card">
+                                        <div className="card-inner">
+                                            <div className="card-front">
+                                                {achievement.image ? (
+                                                    <img src={achievement.image} alt={achievement.title} className="card-img" />
+                                                ) : (
+                                                    <div className="text-logo">{achievement.issuer || category}</div>
+                                                )}
+                                            </div>
+                                            <div className="card-back">
+                                                <h4>{achievement.title}</h4>
+                                                <p>Issuer: {achievement.issuer || 'N/A'}</p>
+                                                <p>Date: {achievement.date ? new Date(achievement.date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) : 'N/A'}</p>
+                                                <p>{achievement.description}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <p>No achievements available</p>
                 )}
             </section>
             <ScrollToTop />
